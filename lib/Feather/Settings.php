@@ -20,23 +20,16 @@ class Settings extends Singleton
 {
     public function __construct()
     {
-        // Ascend the directory tree, looking for a settings.ini file
-        $basedir = dirname(__DIR__);
-        while ($basedir !== DIRECTORY_SEPARATOR) {
-
-            $basedir = dirname($basedir);
-
-            $file = $basedir . "/settings.ini";
-            if (is_readable($file) === YES) {
-                $settings = parse_ini_file($file, YES);
-                foreach ($settings as $key => $value) {
-                    $this->$key = $value;
-                }
-                return;
-            }
+        // Look for a settings.ini file in the project root
+        $filename = ROOTDIR . "/settings.ini";
+        if (is_readable($filename) === NO) {
+            trigger_error("No readable settings.ini file found in the project root");
+            return (object) null;
         }
 
-        // Found nothing
-        trigger_error("Unable to find settings file in any parent directory");
+        $settings = parse_ini_file($filename, YES);
+        foreach ($settings as $key => $value) {
+            $this->$key = $value;
+        }
     }
 }
