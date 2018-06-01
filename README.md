@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/digitaldesignlabs/escher.svg?branch=master)](https://travis-ci.org/digitaldesignlabs/escher)
+[![Build Status](https://travis-ci.org/digitaldesignlabs/feather.svg?branch=master)](https://travis-ci.org/digitaldesignlabs/feather)
 
-Escher
-======
+Feather
+=======
 
-A lightweight PHP framework. Get started with:
+A featherlight PHP framework. Get started with:
 
 ```bash
-composer create-project digitaldesignlabs/escher-project project-name
+composer create-project digitaldesignlabs/feather-project project-name
 ```

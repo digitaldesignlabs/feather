@@ -1,6 +1,6 @@
 {
-    "name": "digitaldesignlabs/escher",
-    "description": "A lightweight PHP framework",
+    "name": "digitaldesignlabs/feather",
+    "description": "A featherlight PHP framework",
     "license": "MIT",
     "authors": [
         {
@@ -13,7 +13,7 @@
         "guzzlehttp/guzzle": "^6.1"
     },
     "autoload": {
-        "psr-4": {"TDM\\": "lib"}
+        "psr-4": {"DDL\\Feather\\": "lib/Feather"}
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4"

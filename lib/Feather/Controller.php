@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Escher Framework
- * @package \TDM\Escher
+ * Feather Framework
+ * @package DDL\Feather
  */
 
-namespace TDM\Escher;
+namespace DDL\Feather;
 
 /**
  * Controller

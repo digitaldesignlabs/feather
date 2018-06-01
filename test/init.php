@@ -1,3 +1,3 @@
 <?php
 
-TDM\Escher\Escher::init();
+DDL\Feather\Feather::init();

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use TDM\Escher\Template;
+use DDL\Feather\Template;
 
 /**
  * TemplateTest

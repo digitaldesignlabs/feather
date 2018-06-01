@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Escher Framework
- * @package \TDM\Escher
+ * Feather Framework
+ * @package DDL\Feather
  */
 
-namespace TDM\Escher;
+namespace DDL\Feather;
 
 /**
- * Escher
- * Set up the Escher environment
+ * Feather
+ * Set up the Feather environment
  * @author Mike Hall
  * @copyright GG.COM Ltd
  * @license MIT
  */
-class Escher
+class Feather
 {
     public static function init()
     {
