@@ -12,6 +12,7 @@ namespace DDL\Feather;
  * Adapted from Minify by Stephen Clay.
  * This is a heavy regex-based removal of whitespace, unnecessary comments and
  * tokens. IE conditional comments are preserved.
+ *
  * @author Stephen Clay <steve@mrclay.org>
  * @copyright Copyright (c) 2008 Ryan Grove <ryan@wonko.com>
  * @copyright Copyright (c) 2008 Steve Clay <steve@mrclay.org>
@@ -20,7 +21,24 @@ namespace DDL\Feather;
 class HTMLMinify
 {
     /**
+     * A prefix for the placeholder tags
+     * @var string
+     * @access protected
+     */
+    protected static $placeholderPrefix = null;
+
+    /**
+     * A list of placeholders
+     * @var array
+     * @access protected
+     */
+    protected static $placeholders = array();
+
+    /**
+     * minify()
      * "Minify" an HTML page
+     *
+     * @static
      * @param string $html
      * @return string
      */
@@ -28,8 +46,8 @@ class HTMLMinify
     {
         $html = str_replace("\r\n", "\n", trim($html));
 
-        self::$replacementHash = 'MINIFYHTML' . md5(time());
-        self::$placeholders    = array();
+        self::$placeholderPrefix = 'MINIFYHTML' . md5(time());
+        self::$placeholders = array();
 
         // replace SCRIPTs (and minify) with placeholders
         $html = preg_replace_callback(
@@ -56,6 +74,7 @@ class HTMLMinify
             function ($m) {
                 $openStyle = $m[1];
                 $css = $m[2];
+
                 // remove HTML comments
                 $css = preg_replace('/(?:^\\s*<!--|-->\\s*$)/', '', $css);
 
@@ -73,8 +92,8 @@ class HTMLMinify
             '/<!--([\\s\\S]*?)-->/',
             function ($m) {
                 return (0 === strpos($m[1], '[') || NO !== strpos($m[1], '<!['))
-                ? $m[0]
-                : '';
+                    ? $m[0]
+                    : '';
             },
             $html
         );
@@ -135,16 +154,27 @@ class HTMLMinify
         return $html;
     }
 
+    /**
+     * reservePlace()
+     * Substitute a placeholder for this content
+     *
+     * @param string $content
+     * @return string Placeholder content
+     */
     protected static function reservePlace($content)
     {
-        $placeholder = '%' . self::$replacementHash . count(self::$placeholders) . '%';
+        $placeholder = '%' . self::$placeholderPrefix . count(self::$placeholders) . '%';
         self::$placeholders[$placeholder] = $content;
         return $placeholder;
     }
 
-    protected static $replacementHash = null;
-    protected static $placeholders = array();
-
+    /**
+     * removeCdata()
+     * Strip out CDATA attributes
+     *
+     * @param string $content
+     * @return string Placeholder content
+     */
     protected static function removeCdata($str)
     {
         return (NO !== strpos($str, '<![CDATA['))

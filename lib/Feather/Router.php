@@ -42,11 +42,11 @@ class Router
     public $chunkSize = 10;
 
     /**
-     * Sanitise the HTTP verb.
-     *
+     * cleanMethod()
      * If the passed verb is POST, it returns POST. Otherwise, it returns GET. Escher\Router only
      * supports POST and GET verbs. We could do others, I suppose? But is there really a point for
      * a browser-based application framework?
+     *
      * @access private
      * @param string $method - The method to clean
      * @return string - A valid HTTP method
@@ -66,9 +66,9 @@ class Router
     }
 
     /**
-     * Convert placeholders to regex format
-     *
+     * convertPathToRegex()
      * Translates the [:any]-style route placeholders into regex so we can use it for matching.
+     *
      * @access private
      * @param string $path - The path to translate
      * @return string - The translated path
@@ -88,10 +88,10 @@ class Router
     }
 
     /**
-     * Register a wildcard route
-     *
+     * registerWildcardRoute()
      * Registers a wildcare route in the routing table, and stores the regex
      * in an equivalent position in the regex table.
+     *
      * @access private
      * @param string $method - The HTTP-verb
      * @param string $path - The path to register
@@ -111,12 +111,12 @@ class Router
     }
 
     /**
-     * Compile a regex statement
-     *
+     * compileRegexChunk()
      * Compile a list of regular expressions into a single regex chunk
      * and mark each chunk with a number of empty "dummy" groups at the
      * end of the expression. We can count these dummy groups later to find out
      * which of the expressions matched, and therefore where we should be routing.
+     *
      * @access private
      * @param array $chunk - List of paths to match, in regex format
      * @return string - Compiled regular expression
@@ -132,11 +132,11 @@ class Router
     }
 
     /**
-     * Search the slow routing table
-     *
+     * searchWildcardRoutes()
      * Searches the slow routing table for a match for the passed method and path
      * In the event that one is found, it returns the callback to run. Otherwise,
      * it return NO.
+     *
      * @access private
      * @param string $method - The HTTP-verb to check (or * for generic)
      * @param string $path - The path to check
@@ -197,10 +197,10 @@ class Router
     }
 
     /**
-     * Specifies a route to map to a request
-     *
+     * map()
      * Takes either ($path, $callback) or ($method, $path, $callback)
      * and adds to the routing tables so we can route the request later.
+     *
      * @access public
      * @param string $method - The HTTP verb
      * @param string $path - The path for this route
@@ -249,9 +249,9 @@ class Router
     }
 
     /**
-     * Route a request
-     *
+     * route()
      * Takes a method and a path, and returns an appropriate callback.
+     *
      * @access public
      * @param string $method - The HTTP-verb to check
      * @param string $path - The path to check

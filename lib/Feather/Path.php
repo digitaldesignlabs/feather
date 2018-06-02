@@ -115,7 +115,7 @@ class Path
      */
     private static function win32Resolver(array $paths)
     {
-        throw new Exception("Not Implemented");
+        throw new Error("Not Implemented");
     }
 
     /**

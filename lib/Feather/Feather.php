@@ -10,6 +10,7 @@ namespace DDL\Feather;
 /**
  * Feather
  * Set up the Feather environment
+ *
  * @author Mike Hall
  * @copyright GG.COM Ltd
  * @license MIT

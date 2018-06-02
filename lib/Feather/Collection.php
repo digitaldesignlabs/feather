@@ -21,6 +21,7 @@ class Collection
      * map()
      * Apply a callback function to each element of an array
      *
+     * @static
      * @param array $array
      * @param callable $callback
      * @return array
@@ -34,6 +35,7 @@ class Collection
      * pick()
      * Discard all but the keys named in the second parameter
      *
+     * @static
      * @param array $array
      * @param mixed $keys
      * @return array
@@ -51,6 +53,7 @@ class Collection
      * omit()
      * Discard the keys named in the second parameter
      *
+     * @static
      * @param array $array
      * @param mixed $keys
      * @return array
@@ -68,6 +71,7 @@ class Collection
      * slice()
      * Return a portion of the array, starting at index $start and continuing for $length elements
      *
+     * @static
      * @param array $array
      * @param int $start - The initial offset
      * @param int $length (optional) - The length of the slice, or null for "the rest of the array"
@@ -83,6 +87,7 @@ class Collection
      * reduce()
      * Reduce an array to a scalar value. Simple wrapper around the standard function
      *
+     * @static
      * @param array $array
      * @param callable $callback
      * @param mixed $initial (optional)
@@ -100,6 +105,7 @@ class Collection
      * filter()
      * Discard array elements, based upon a callback function. Does not maintain key-value association.
      *
+     * @static
      * @param array $array
      * @param callable $callback, return truthy to keep
      * @return array
@@ -120,6 +126,7 @@ class Collection
      * has()
      * Does the needle exist in the haystack?
      *
+     * @static
      * @param array $haystack
      * @param mixed $needle
      * @return boolean
@@ -133,6 +140,7 @@ class Collection
      * hasKey()
      * Does the needle exist as a key in the haystack?
      *
+     * @static
      * @param array $haystack
      * @param mixed $needle
      * @return boolean
@@ -147,6 +155,7 @@ class Collection
      * Flatten an array-of-arrays down into a single linear array.
      * Optional $deep parameter determines whether to recurse into sub arrays, or just do a single pass
      *
+     * @static
      * @param array $array
      * @param boolean $deep (optional)
      * @return array
@@ -168,6 +177,7 @@ class Collection
      * find()
      * Find the first array element which matches the supplied callback
      *
+     * @static
      * @param array $array
      * @param callable $callback
      * @return mixed matching element, or NULL for no match
@@ -187,6 +197,7 @@ class Collection
      * every()
      * Returns true if every element of the array matches a supplied callback
      *
+     * @static
      * @param array $array
      * @param callable $callback
      * @return boolean
@@ -206,6 +217,7 @@ class Collection
      * some()
      * Returns true if at least one element of the array matches a supplied callback
      *
+     * @static
      * @param array $array
      * @param callable $callback
      * @return boolean
@@ -226,6 +238,7 @@ class Collection
      * Sorts an array, based on the comparator supplied. This can be a callable, a string referencing
      * a key whose value we want to be the comparator, or an array of such strings.
      *
+     * @static
      * @param array $array
      * @param mixed $comparator
      * @return boolean
@@ -291,9 +304,10 @@ class Collection
     }
 
     /**
-     * esort()
+     * rsort()
      * Reverse sorts an array, based on the comparator supplied. The comparator is the same as in Collection::sort()
      *
+     * @static
      * @param array $array
      * @param mixed $comparator
      * @return boolean

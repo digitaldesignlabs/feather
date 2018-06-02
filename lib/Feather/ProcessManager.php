@@ -47,8 +47,9 @@ class ProcessManager
 
     /**
      * Constructor
-     * @return void
+     *
      * @access private
+     * @return void
      */
     private function __construct()
     {
@@ -74,22 +75,25 @@ class ProcessManager
     }
 
     /**
+     * realLock()
      * Lock current script
-     * @return bool - YES on successful lock, NO on error
+     *
      * @access private
+     * @return bool - YES on successful lock, NO on error
      */
     private static function realLock()
     {
         clearstatcache();
-        if (!file_exists(self::$lockFilePath)) {
+        if (file_exists(self::$lockFilePath) === NO) {
             return !!file_put_contents(self::$lockFilePath, getmypid());
         }
         return NO;
     }
 
     /**
-     * Unlock current script
-     * Removes the current lock file, if it was created by this process
+     * realUnlock()
+     * Unlock current script. Removes the current lock file, if it was created by this process
+     *
      * @access private
      */
     private static function realUnlock()
@@ -101,9 +105,11 @@ class ProcessManager
     }
 
     /**
+     * log()
      * Write log file entry
-     * @param string $msg - Text to log
+     *
      * @access public
+     * @param string $msg - Text to log
      */
     public static function log()
     {
@@ -125,9 +131,11 @@ class ProcessManager
     }
 
     /**
+     * lock()
      * Public lock file interface
-     * @return bool - YES on successful lock, NO on error
+     *
      * @access public
+     * @return bool - YES on successful lock, NO on error
      */
     public static function lock()
     {
@@ -148,7 +156,9 @@ class ProcessManager
     }
 
     /**
+     * unlock()
      * Public unlock file interface
+
      * @access public
      */
     public static function unlock()
@@ -158,7 +168,9 @@ class ProcessManager
     }
 
     /**
+     * whoLocked()
      * What process holds the lock?
+     *
      * @access public
      * @return string - The PID of the locking process, or null if can't get PID
      */
@@ -171,19 +183,22 @@ class ProcessManager
     }
 
     /**
+     * init()
      * Initialise system
+     *
      * @access public
      */
     public static function init()
     {
-        if (!(self::$processHandler instanceof ProcessManager)) {
+        if (self::$processHandler instanceof ProcessManager === NO) {
             self::$processHandler = new ProcessManager();
         }
     }
 
     /**
-     * Destructor
+     * __destruct()
      * Automatically unlocks the process at shutdown
+     *
      * @access public
      */
     public function __destruct()

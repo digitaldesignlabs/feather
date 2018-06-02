@@ -10,6 +10,7 @@ namespace DDL\Feather;
 /**
  * EmailAddress
  * For working with email addresses. Honestly.
+ *
  * @copyright GG.COM Ltd
  * @license MIT
  * @author Mike Hall
@@ -17,7 +18,10 @@ namespace DDL\Feather;
 class EmailAddress
 {
     /**
+     * isValid()
      * Validate an email address
+     *
+     * @static
      * @param string $email
      * @return boolean
      */

@@ -12,6 +12,7 @@ namespace DDL\Feather;
  * Abstract class for creating singletons. Extend a class from this
  * abstract class, and then use $instance = YourClass::instance() to get
  * a singleton instance of that class.
+ *
  * @author Mike Hall
  * @copyright GG.COM Ltd
  * @license MIT
@@ -19,8 +20,9 @@ namespace DDL\Feather;
 abstract class Singleton
 {
     /**
-     * Escher\Singleton::instance()
+     * instance()
      *
+     * @static
      * @param boolean $new - Get a new instance, not a singleton
      * @return object - The instance
      **/

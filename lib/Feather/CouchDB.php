@@ -13,6 +13,7 @@ use GuzzleHttp\Client;
 /**
  * CouchDB
  * Interface to CouchDB databases
+ *
  * @copyright GG.COM Ltd
  * @license MIT
  * @author Mike Hall
@@ -27,8 +28,10 @@ class CouchDB extends Singleton
     private $guzzle;
 
     /**
-     * Constructor. Creates a Guzzle object, with the BaseURI set to whatever
-     * is in the Escher settings file for the couch host, or whatever is passed as a param instead.
+     * Constructor
+     * Creates a Guzzle object, with the BaseURI set to whatever is in the settings file for the
+     * couch host, or whatever is passed as a param instead.
+     *
      * @param string $base - The base path to use (optional)
      * @access protected
      */
@@ -41,7 +44,9 @@ class CouchDB extends Singleton
     }
 
     /**
+     * parse()
      * Process response objects from guzzle
+     *
      * @param Guzzle\Http\Message\Response $response - a guzzle response
      * @return array
      */
@@ -64,11 +69,13 @@ class CouchDB extends Singleton
     }
 
     /**
+     * request()
      * Performs an HTTP request with the specified parameters
+     *
      * @param string $method - The HTTP verb to use
      * @param string $path - The path to request
      * @param array $options - The options for this request
-     * @return array - The parsed response
+     * @return array The parsed response
      */
     private function request($method, $path, array $options)
     {
@@ -84,11 +91,13 @@ class CouchDB extends Singleton
     }
 
     /**
+     * get()
      * Gets a Couch document from the specified path
+     *
      * @param string $path - The resource to fetch
      * @param array $headers - Any additional headers to supply (optional)
      * @param array $options - Any options to pass to Guzzle (optional)
-     * @return array - The parsed response
+     * @return array The parsed response
      */
     public static function get($path, array $headers = [], array $options = [])
     {
@@ -97,14 +106,16 @@ class CouchDB extends Singleton
     }
 
     /**
+     * view()
      * Gets a Couch View from the specified location
+     *
      * @param string $db - The database name (supply an empty string if this is in the base path already)
      * @param string $design - The name of the design document
      * @param string $view - The name of the view within the design document
      * @param array $query - Any parameters to pass on the query string (optional)
      * @param array $headers - Any additional headers to supply (optional)
      * @param array $options - Any options to pass to Guzzle (optional)
-     * @return array - The parsed response
+     * @return array The parsed response
      */
     public static function view($db, $design, $view, array $query = [], array $headers = [], array $options = [])
     {
@@ -130,12 +141,14 @@ class CouchDB extends Singleton
     }
 
     /**
+     * delete()
      * Deletes the resource at the specified path
+     *
      * @param string $path - The resource to delete
      * @param string $rev - The latest revision of the resource
      * @param array $headers - Any additional headers to supply (optional)
      * @param array $options - Any options to pass to Guzzle (optional)
-     * @return array - The parsed response
+     * @return array The parsed response
      */
     public static function delete($path, $rev, array $headers = [], $options = [])
     {
@@ -145,12 +158,14 @@ class CouchDB extends Singleton
     }
 
     /**
+     * post()
      * Posts data to the database
+     *
      * @param string $db - The database name (supply an empty string if this is in the base path already)
      * @param array $params - The data to post
      * @param array $headers - Any additional headers to supply (optional)
      * @param array $options - Any options to pass to Guzzle (optional)
-     * @return array - The parsed response
+     * @return array The parsed response
      */
     public static function post($path, array $params, array $headers = [], array $options = [])
     {
@@ -168,12 +183,14 @@ class CouchDB extends Singleton
     }
 
     /**
+     * put()
      * Puts data to the database
+     *
      * @param string $db - The database name (supply an empty string if this is in the base path already)
      * @param array $params - The data to put
      * @param array $headers - Any additional headers to supply (optional)
      * @param array $options - Any options to pass to Guzzle (optional)
-     * @return array - The parsed response
+     * @return array The parsed response
      */
     public static function put($path, array $params, array $headers = [], array $options = [])
     {
@@ -191,7 +208,9 @@ class CouchDB extends Singleton
     }
 
     /**
+     * cleanup()
      * Removes Couch meta data from the document
+     *
      * @param array $doc - The document to clean
      * @return array - The cleaned document
      */
@@ -201,7 +220,9 @@ class CouchDB extends Singleton
     }
 
     /**
+     * cleanupView()
      * Removes Couch meta data from output of a view
+     *
      * @param array $doc - The list of documents to clean
      * @return array - The cleaned documents
      */

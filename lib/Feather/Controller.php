@@ -14,7 +14,7 @@ namespace DDL\Feather;
  *
  * All Controllers should extend this. At the moment this does nothing, but who knows what we might add?
  * <code>
- *   class \MyCompany\MyProject\MyController extends \Escher\Escher\Controller
+ *   class \MyCompany\MyProject\MyController extends \DDL\Feather\Controller
  *   {
  *     // Do stuff
  *   }
