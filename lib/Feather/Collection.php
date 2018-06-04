@@ -28,7 +28,7 @@ class Collection
      */
     public static function map(array $array, $callback)
     {
-        return array_map($callback, $array);
+        return array_map($callback, array_values($array), array_keys($array));
     }
 
     /**
