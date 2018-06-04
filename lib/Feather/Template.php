@@ -142,7 +142,7 @@ class Template extends Singleton
      * @param string $address - The address to load the block into
      * @param string $childBlockAddress (optional) - The name of a specific block from the template to load.
      *     If not specified, all blocks will be loaded
-     * @return void
+     * @return string The address of the new block
      */
     public function loadTemplate(string $templateFilename, $address, $childBlockAddress = null)
     {
@@ -151,7 +151,7 @@ class Template extends Singleton
         }
 
         $content = file_get_contents($templateFilename);
-        $this->loadTemplateFromString($content, $address, $childBlockAddress);
+        return $this->loadTemplateFromString($content, $address, $childBlockAddress);
     }
 
     /**
@@ -170,7 +170,7 @@ class Template extends Singleton
      * @param string $address - The address to load the block into
      * @param string $childBlockAddress (optional) - The name of a specific block from the template to load.
      *     If not specified, all blocks will be loaded
-     * @return void
+     * @return string The address of the new block
      */
     public function loadTemplateFromString($templateSource, $address, $childBlockAddress = null)
     {
@@ -191,6 +191,7 @@ class Template extends Singleton
         // Find the target block we are going to write too, creating child blocks as required
         $target =& $this->seek($path, $this->rootBlock, ["create" => YES]);
         $target["children"][$blockName] = $newBlock;
+        return $address;
     }
 
     /**
@@ -314,7 +315,7 @@ class Template extends Singleton
 
         // Find the right section of the block and apply the data to it
         foreach ($data as $name => $value) {
-            if (is_string($name) === NO) {
+            if (is_string($name) === YES) {
                 if (is_array($value) && is_callable($value) === NO) {
                     $value = $this->smoosh($value);
                     foreach ($value as $subname => $subvalue) {
