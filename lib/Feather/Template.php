@@ -507,7 +507,7 @@ class Template extends Singleton
 
         // Strip out unused elements
         if ($this->removeUnusedNames === YES) {
-            $value = preg_replace('/{{{?\w+(?:\|[\w\|]+)?}?}}/', "", $value);
+            $value = preg_replace('/{{{?[\w\.]+(?:\|[\w\|]+)?}?}}/', "", $value);
         }
 
         // Strip out unused comments
