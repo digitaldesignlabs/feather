@@ -219,7 +219,7 @@ class Router
             $callback = array_shift($arguments);
 
         // Three arguments means we got ($method, $path, $callback)
-        } elseif (sizeof($arguments === 3)) {
+        } elseif (sizeof($arguments) === 3) {
             $method   = $this->cleanMethod(array_shift($arguments));
             $path     = strtolower(array_shift($arguments));
             $callback = array_shift($arguments);
