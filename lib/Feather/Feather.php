@@ -17,9 +17,13 @@ namespace DDL\Feather;
  */
 class Feather
 {
-    public static function init()
+    public static function init($rootdir = null)
     {
         define("YES", true);
         define("NO", false);
+
+        if (is_null($rootdir) === NO) {
+            define("ROOTDIR", $rootdir);
+        }
     }
 }
