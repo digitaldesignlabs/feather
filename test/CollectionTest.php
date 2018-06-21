@@ -92,6 +92,12 @@ final class CollectionTest extends TestCase
         $this->assertEquals($result, [["foo" => YES], ["foo" => YES]]);
     }
 
+    public function testNakedFilter()
+    {
+        $result = Collection::filter(["foo", null, false, "bar", 0, NO, "baz"]);
+        $this->assertEquals($result, ["foo", "bar", "baz"]);
+    }
+
     public function testHas()
     {
         $result = Collection::has([1, 2, 3], 3);
@@ -227,5 +233,103 @@ final class CollectionTest extends TestCase
         });
 
         $this->assertEquals($result, [2, 4, 6, 1, 3, 5]);
+    }
+
+    public function testFirst()
+    {
+        $array = ["foo" => "bar", "baz" => "baf", "quux" => "corge"];
+
+        next($array);
+        $ptr = key($array);
+
+        $first = Collection::first($array);
+        $this->assertEquals($first, "bar");
+        $this->assertEquals($ptr, key($array), "Collection::first() moved array pointer");
+    }
+
+    public function testEmptyFirst()
+    {
+        $first = Collection::first(array());
+        $this->assertEquals($first, null);
+    }
+
+    public function testFirstKey()
+    {
+        $array = ["foo" => "bar", "baz" => "baf", "quux" => "corge"];
+
+        next($array);
+        $ptr = key($array);
+
+        $first = Collection::firstKey($array);
+        $this->assertEquals($first, "foo");
+        $this->assertEquals($ptr, key($array), "Collection::firstKey() moved array pointer");
+    }
+
+    public function testEmptyFirstKey()
+    {
+        $first = Collection::firstKey(array());
+        $this->assertEquals($first, null);
+    }
+
+    public function testLast()
+    {
+        $array = ["foo" => "bar", "baz" => "baf", "quux" => "corge"];
+
+        next($array);
+        $ptr = key($array);
+
+        $last = Collection::last($array);
+        $this->assertEquals($last, "corge");
+        $this->assertEquals($ptr, key($array), "Collection::last() moved array pointer");
+    }
+
+    public function testEmptyLast()
+    {
+        $last = Collection::last(array());
+        $this->assertEquals($last, null);
+    }
+
+    public function testLastKey()
+    {
+        $array = ["foo" => "bar", "baz" => "baf", "quux" => "corge"];
+
+        next($array);
+        $ptr = key($array);
+
+        $last = Collection::lastKey($array);
+        $this->assertEquals($last, "quux");
+        $this->assertEquals($ptr, key($array), "Collection::lastKey() moved array pointer");
+    }
+
+    public function testEmptyLastKey()
+    {
+        $last = Collection::lastKey(array());
+        $this->assertEquals($last, null);
+    }
+
+    public function testUniqueSimple()
+    {
+        $duplicates = [1, 1, 3, 5, 5, 6, 7, 8, 8, 8, 3, 1, 6, 7];
+        $unique = Collection::unique($duplicates);
+        $this->assertEquals($unique, [1, 3, 5, 6, 7, 8]);
+    }
+
+    public function testUniqueNested()
+    {
+        $duplicates = [["foo" => YES], ["foo" => NO], ["foo" => YES], ["bar" => NO]];
+        $unique = Collection::unique($duplicates);
+        $this->assertEquals($unique, [["foo" => YES], ["foo" => NO], ["bar" => NO]]);
+    }
+
+    public function testMapFilter()
+    {
+        $array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        $mapped = Collection::mapFilter($array, function ($element) {
+            if ($element % 2 === 0) {
+                return $element * 2;
+            }
+            return NO;
+        });
+        $this->assertEquals($mapped, [4, 8, 12, 16]);
     }
 }

@@ -110,9 +110,17 @@ class Collection
      * @param callable $callback, return truthy to keep
      * @return array
      */
-    public static function filter(array $array, $callback)
+    public static function filter(array $array, $callback = null)
     {
-        if (is_string($callback) === YES) {
+        // Default to filtering empty elements
+        if (is_null($callback) === YES) {
+            $callback = function ($element) {
+                return empty($element) === NO;
+            };
+        }
+
+        // Allow filtering based on a supplied key name
+        if (is_string($callback) === YES && is_callable($callback) === NO) {
             $callback = function ($element) use ($callback) {
                 return empty($element[$callback]) === NO;
             };
@@ -134,6 +142,20 @@ class Collection
     public static function has(array $haystack, $needle)
     {
         return in_array($needle, $haystack);
+    }
+
+    /**
+     * contains()
+     * Alias for Collection::has()
+     *
+     * @static
+     * @param array $haystack
+     * @param mixed $needle
+     * @return boolean
+     */
+    public static function contains(array $haystack, $needle)
+    {
+        return self::has($haystack, $needle);
     }
 
     /**
@@ -315,5 +337,120 @@ class Collection
     public static function rsort(array $array, $callback)
     {
         return array_reverse(self::sort($array, $callback));
+    }
+
+    /**
+     * first()
+     * Gets the value of the first element in an array
+     *
+     * @static
+     * @param array $array
+     * @return mixed
+     */
+    public static function first(array $array)
+    {
+        if (empty($array)) {
+            return null;
+        }
+
+        $slice = array_slice($array, 0, 1);
+        return array_pop($slice);
+    }
+
+    /**
+     * last()
+     * Gets the value of the last element in an array
+     *
+     * @static
+     * @param array $array
+     * @return mixed
+     */
+    public static function last(array $array)
+    {
+        if (empty($array)) {
+            return null;
+        }
+
+        $slice = array_slice($array, -1);
+        return array_pop($slice);
+    }
+
+    /**
+     * firstKey()
+     * Gets the key of the first element in an array
+     *
+     * @static
+     * @param array $array
+     * @return mixed
+     */
+    public static function firstKey(array $array)
+    {
+        if (empty($array)) {
+            return null;
+        }
+
+        return key(array_slice($array, 0, 1));
+    }
+
+    /**
+     * lastKey()
+     * Gets the key of the last element in an array
+     *
+     * @static
+     * @param array $array
+     * @return mixed
+     */
+    public static function lastKey(array $array)
+    {
+        if (empty($array)) {
+            return null;
+        }
+
+        return key(array_slice($array, -1));
+    }
+
+    /**
+     * unique()
+     * Unique the values within an array
+     *
+     * @static
+     * @param array $array
+     * @return array $array with duplicates removed
+     */
+    public static function unique(array $array)
+    {
+        return array_reduce(
+            $array,
+            function ($carry, $element) {
+                if (self::has($carry, $element) === NO) {
+                    array_push($carry, $element);
+                }
+                return $carry;
+            },
+            array()
+        );
+    }
+
+    /**
+     * mapFilter()
+     * Map over an array and remove and element which returns exactly false.
+     *
+     * @static
+     * @param array $array
+     * @return array $array processed array with falses removed
+     */
+    public static function mapFilter(array $array, callable $callback)
+    {
+        return array_reduce(
+            $array,
+            function ($carry, $element) use ($array, $callback) {
+                $element = call_user_func($callback, $element, $array);
+                if ($element !== NO) {
+                    $carry[] = $element;
+                }
+                return $carry;
+            },
+            array()
+        );
     }
 }
