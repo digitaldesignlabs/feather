@@ -437,6 +437,7 @@ class Collection
      *
      * @static
      * @param array $array
+     * @param callable $callback
      * @return array $array processed array with falses removed
      */
     public static function mapFilter(array $array, callable $callback)
@@ -452,5 +453,56 @@ class Collection
             },
             array()
         );
+    }
+
+    /**
+     * seek()
+     * Find a value within an array, using a supplied path
+     *
+     * @static
+     * @param array $array
+     * @param mixed $path
+     * @return mixed
+     */
+    public static function seek(array $array, $path)
+    {
+        if (is_string($path) === YES) {
+            $path = [$path];
+        }
+
+        return self::reduce($path, function ($carry, $key) {
+            if (array_key_exists($key, $carry) === YES) {
+                return $carry[$key];
+            }
+            return null;
+        }, $array);
+    }
+
+    /**
+     * groupBy()
+     * Group a collection by the value of a callback function
+     *
+     * @static
+     * @param array $array
+     * @param mixed $callback
+     * @return array Grouped values
+     */
+    public static function groupBy(array $array, $callback)
+    {
+        if (is_callable($callback) === NO && (is_string($callback) || is_array($callback))) {
+            $path = $callback;
+            $callback = function ($value) use ($path) {
+                return self::seek($value, $path);
+            };
+        }
+
+        return self::reduce($array, function ($carry, $value) use ($callback) {
+            $group = call_user_func($callback, $value);
+            if (self::hasKey($carry, $group) === NO) {
+                $carry[$group] = array();
+            }
+            $carry[$group][] = $value;
+            return $carry;
+        }, array());
     }
 }

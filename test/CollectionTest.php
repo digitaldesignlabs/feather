@@ -332,4 +332,50 @@ final class CollectionTest extends TestCase
         });
         $this->assertEquals($mapped, [4, 8, 12, 16]);
     }
+
+    public function testSeek()
+    {
+        $array = array(
+            "group" => ["label" => "A"]
+        );
+
+        $value = Collection::seek($array, ["group", "label"]);
+        $this->assertEquals($value, "A");
+    }
+
+    public function testGroupBy()
+    {
+        $array = ["foo", "bar", "baz", "quux"];
+        $grouped = Collection::groupBy($array, function ($element) {
+            return strlen($element);
+        });
+
+        $this->assertEquals($grouped, array(
+            "3" => ["foo", "bar", "baz"],
+            "4" => ["quux"],
+        ));
+    }
+
+    public function testGroup()
+    {
+        $array = array(
+            ["name" => "foo", "group" => "A"],
+            ["name" => "bar", "group" => "A"],
+            ["name" => "baz", "group" => "B"],
+            ["name" => "baf", "group" => "B"],
+        );
+
+        $grouped = Collection::groupBy($array, "group");
+
+        $this->assertEquals($grouped, array(
+            "A" => array(
+                ["name" => "foo", "group" => "A"],
+                ["name" => "bar", "group" => "A"],
+            ),
+            "B" => array(
+                ["name" => "baz", "group" => "B"],
+                ["name" => "baf", "group" => "B"],
+            )
+        ));
+    }
 }
