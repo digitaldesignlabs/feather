@@ -490,7 +490,7 @@ class Template extends Singleton
         $value = preg_replace_callback(
             '/{{`([^`]+)`(?:\|([\w\|]+))?}}/',
             function ($matches) {
-                $tempname = hash("sha256", $matches[1]);
+                $tempname = "LIT" . substr(hash("sha256", $matches[1]), 0, 10);
                 $this->assign([$tempname => $matches[1]]);
                 if (empty($matches[2])) {
                     return "{{" . $tempname. "}}";
