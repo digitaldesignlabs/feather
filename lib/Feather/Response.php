@@ -89,13 +89,6 @@ class Response
      */
     public static function redirectWithStatusCode($statusCode, $location)
     {
-        // If this is not an absolute redirect, assume local
-        if (strpos($location, "://") === NO) {
-            $scheme = isset($_SERVER["HTTPS"]) ? "https" : "http";
-            $location = sprintf("%s://%s%s", $scheme, getenv("HTTP_HOST"), $location);
-        }
-
-        // Output redirect header with status param
         header("Location: $location", YES, $statusCode);
         exit;
     }
